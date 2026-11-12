@@ -1,6 +1,6 @@
 // ---- Config -------------------------------------------------------------
 // Change this if your backend runs somewhere else.
-const API_URL = "http://127.0.0.1:8000";
+const API_URL = "https://ml-house-predicitor.onrender.com";
 // Order must match model.classes_ (scikit-learn sorts class names alphabetically).
 const CLASSES = [
   { name: "Entire home/apt", short: "E", color: "#ff6319" },

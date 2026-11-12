@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Room Type Predictor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800&family=Archivo+Narrow:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <svg class="skyline" viewBox="0 0 600 160" preserveAspectRatio="xMaxYMax meet" aria-hidden="true">
+      <g fill="currentColor">
+        <rect x="0" y="110" width="34" height="50"/><rect x="40" y="78" width="30" height="82"/><rect x="76" y="96" width="26" height="64"/>
+        <rect x="108" y="52" width="38" height="108"/><rect x="152" y="86" width="28" height="74"/>
+        <path d="M196 160V70h12V46h8V20h3V4h2v16h3v26h8v24h12v90z"/>
+        <rect x="246" y="92" width="30" height="68"/><rect x="282" y="60" width="36" height="100"/><rect x="324" y="100" width="24" height="60"/>
+        <rect x="354" y="40" width="34" height="120"/><rect x="394" y="84" width="30" height="76"/><rect x="430" y="64" width="26" height="96"/>
+        <rect x="462" y="104" width="34" height="56"/><rect x="502" y="76" width="28" height="84"/><rect x="536" y="98" width="30" height="62"/><rect x="570" y="120" width="30" height="40"/>
+      </g>
+    </svg>
+
+    <div class="bullets" aria-hidden="true"><i class="b o"></i><i class="b g"></i><i class="b u"></i></div>
+    <div>
+      <h1>What kind of room is this listing?</h1>
+      <p>Describe a New York Airbnb listing and the model predicts whether it is an entire home, a private room or a shared room.</p>
+    </div>
+  </header>
+
+  <main class="layout">
+    <form id="form" class="card" novalidate>
+      <fieldset>
+        <legend>Location</legend>
+        <div class="grid">
+          <label>Borough
+            <select id="neighbourhood_group" name="neighbourhood_group" required></select>
+          </label>
+          <label>Neighbourhood
+            <input id="neighbourhood" name="neighbourhood" list="hoods" placeholder="e.g. Williamsburg" autocomplete="off" required>
+            <datalist id="hoods"></datalist>
+          </label>
+          <label>Latitude
+            <input type="number" step="any" name="latitude" min="-90" max="90" required>
+          </label>
+          <label>Longitude
+            <input type="number" step="any" name="longitude" min="-180" max="180" required>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Booking</legend>
+        <div class="grid">
+          <label>Price per night (USD)
+            <input type="number" step="any" name="price" min="0.01" required>
+          </label>
+          <label>Minimum nights
+            <input type="number" step="1" name="minimum_nights" min="1" max="365" required>
+          </label>
+          <label>Days available this year
+            <input type="number" step="1" name="availability_365" min="0" max="365" required>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Reviews and host</legend>
+        <div class="grid">
+          <label>Total reviews
+            <input type="number" step="1" name="number_of_reviews" min="0" required>
+          </label>
+          <label>Reviews per month
+            <input type="number" step="any" name="reviews_per_month" min="0" required>
+          </label>
+          <label>Listings by this host
+            <input type="number" step="1" name="calculated_host_listings_count" min="0" required>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="actions">
+        <button type="submit" id="submit">Predict room type</button>
+        <button type="button" id="sample" class="ghost">Fill with an example</button>
+        <button type="reset" class="ghost">Clear</button>
+      </div>
+    </form>
+
+    <aside class="sign" aria-live="polite">
+      <div id="empty" class="state">
+        <p class="hint">Fill in the form and your prediction shows up here.</p>
+      </div>
+
+      <div id="loading" class="state" hidden>
+        <p class="hint">Asking the model…</p>
+      </div>
+
+      <div id="error" class="state" hidden>
+        <p class="err-title">Couldn’t get a prediction</p>
+        <p id="error-msg" class="hint"></p>
+      </div>
+
+      <div id="result" class="state" hidden>
+        <div class="ring" id="ring"><span id="ring-val"></span></div>
+        <p class="small">Predicted room type</p>
+        <span id="result-bullet" class="b big"></span>
+        <h2 id="result-label"></h2>
+        <p id="result-conf" class="small"></p>
+        <ul id="bars" class="bars"></ul>
+      </div>
+    </aside>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
